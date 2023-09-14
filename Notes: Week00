@@ -1,0 +1,9 @@
+[cloudshell-user@ip-10-2-2-161 ~]$ aws --cli-auto-prompt
+> aws sts get-caller-identity
+{
+    "UserId": "AIDAQU6H6IOCWXCJ7JG4G",
+    "Account": "044979602309",
+    "Arn": "arn:aws:iam::044979602309:user/Dhana-wicysbootcamp"
+}
+[cloudshell-user@ip-10-2-2-161 ~]$ 
+
