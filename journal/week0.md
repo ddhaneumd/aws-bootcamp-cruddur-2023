@@ -1,4 +1,4 @@
-# Week 0 — Billing and Architecture
+## Week 0 — Billing and Architecture
 
 ## Project Scenario
 Building "Cruddur" an Ephemeral-first Micro Blogging Application (like Twitter) using AWS services and external services like Momento.
@@ -19,41 +19,48 @@ In the week 00, we are going to lay out the foundation for the entire boot camp 
 - Generating AWS credentials
 
 ## Various Model Types
-- C4 Model: https://c4model.com/
-![c4 model](https://github.com/ddhaneumd/aws-bootcamp-cruddur-2023/assets/142753226/7297fb9d-8311-4dfa-87c5-398f8cdea38d)
+- Good architecture addresses concerns of Risks, Assumptions, and constraints (RRACs)
+- C4 Model:
+- A set of hierarchical abstractions (software systems, containers, components, and code). A set of hierarchical diagrams (system context, containers, components, and code). Notation and tooling independent.
+ ![c4-overview](https://github.com/ddhaneumd/aws-bootcamp-cruddur-2023/assets/142753226/689711f0-7177-46d0-9a1a-a4f3d5fcc47c)
 
-- TOGAF Architecture
+Reference: https://c4model.com/
 
-- AWS's Well architected framework & tool
-## Getting the AWS CLI Working
+- TOGAF Architecture:
+- The Open Group Architecture Framework (TOGAF) is an enterprise architecture methodology that offers a high-level framework for enterprise software development. TOGAF helps organize the development process through a systematic approach aimed at reducing errors, maintaining timelines, staying on budget, and aligning IT with business units to produce quality results.
+![togaf](https://github.com/ddhaneumd/aws-bootcamp-cruddur-2023/assets/142753226/a5930714-7238-4229-89d9-ae3110896beb)
 
-We'll be using the AWS CLI often in this bootcamp,
-so we'll proceed to installing this account.
+Reference: https://www.opengroup.org/togaf
 
+- AWS's Well architected framework
+- The AWS Well-Architected Framework helps you understand the pros and cons of decisions you make while building systems on AWS. By using the Framework you will learn architectural best practices for designing and operating reliable, secure, efficient, cost-effective, and sustainable systems in the cloud.
+- Pillars
+1. Operational excellence
+2. Security
+3. Reliability
+4. Performance efficiency
+5. Cost optimization
+6. Sustainability
+   
+Reference: https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html
+## Types of Designs
+- Conceptual (Napkin): Basic level design by stakeholders and architects. This design defines & organizes rules/concepts.
+- Logical: Shows system implementation, and designed infrastructure without exact labels like names, sizes, and IP addresses.
+- Physical: Actual architectural design with granular details like names, environments, instances, IP ranges, etc.
+  
+## My Conceptual (Napkin) Design
+![Cruddur napkin design Dhana](https://github.com/ddhaneumd/aws-bootcamp-cruddur-2023/assets/142753226/722259a8-cead-48d6-ba1b-5992b5e9d210)
+
+
+## My Logical Design using Lucid Charts
+![Cruddur-logical Diagram -DhanashriD](https://github.com/ddhaneumd/aws-bootcamp-cruddur-2023/assets/142753226/908570d8-c7a2-4051-9d9d-ffd496db52da)
 
 ### Install AWS CLI
 
-- We are going to install the AWS CLI when our Gitpod enviroment lanuches.
+- Install the AWS CLI when our Gitpod enviroment.
 - We are are going to set AWS CLI to use partial autoprompt mode to make it easier to debug CLI commands.
 - The bash commands we are using are the same as the [AWS CLI Install Instructions]https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
 
-
-Update our `.gitpod.yml` to include the following task.
-
-```sh
-tasks:
-  - name: aws-cli
-    env:
-      AWS_CLI_AUTO_PROMPT: on-partial
-    init: |
-      cd /workspace
-      curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-      unzip awscliv2.zip
-      sudo ./aws/install
-      cd $THEIA_WORKSPACE_ROOT
-```
-
-We'll also run these commands indivually to perform the install manually
 
 ### Create a new User and Generate AWS Credentials
 
@@ -95,6 +102,25 @@ You should see something like this:
     "Arn": "arn:aws:iam::655602346534:user/andrewcloudcamp"
 }
 ```
+
+now,
+
+Update our `.gitpod.yml` to include the following task.
+
+```sh
+tasks:
+  - name: aws-cli
+    env:
+      AWS_CLI_AUTO_PROMPT: on-partial
+    init: |
+      cd /workspace
+      curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+      unzip awscliv2.zip
+      sudo ./aws/install
+      cd $THEIA_WORKSPACE_ROOT
+```
+
+We'll also run these commands indivually to perform the install manually
 
 ## Enable Billing 
 
