@@ -375,3 +375,15 @@ volumes:
   db:
     driver: local
 ```
+
+=====================================================================================
+## Spending Considerations:
+
+Cloud Development Environments
+1.	GitPod – for an active workspace, go to user settings and check billing tab.
+    https://gitpod.io/workspaces
+
+2.	GitHub Codespaces – Simple and similar to GitPod, it will be inactive after we close the tab.
+    https://github.com/codespaces
+  	
+3.	AWS Cloud9 – can be used with an AWS free tier account, try to avoid setting up AWS CloudTrail to remain under the free tier. It Logs all API requests, by default for 90 days.
