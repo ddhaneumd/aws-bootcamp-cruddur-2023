@@ -376,14 +376,74 @@ volumes:
     driver: local
 ```
 
-=====================================================================================
 ## Spending Considerations:
 
 Cloud Development Environments
-1.	GitPod – for an active workspace, go to user settings and check billing tab.
-    https://gitpod.io/workspaces
+1. GitPod
+   - for an active workspace, go to user settings and check billing tab.
+   - Up to 50 hours of usage/month, Standard : 4 cores, 8GB RAM & 30GB storage
+   - Do not spinning up multiple environments simultaniously
+   - https://gitpod.io/workspaces
 
-2.	GitHub Codespaces – Simple and similar to GitPod, it will be inactive after we close the tab.
-    https://github.com/codespaces
+2. GitHub Codespaces
+   - Simple and similar to GitPod, it will be inactive after we close the tab.
+   - Up to 60 hours of usage/month with : 2 cores 4 GB RAM and 15 GB of storage
+   - Up to 30 hours of usage/month with : 4 cores 8 GB RAM and 15 GB of storage
+   - https://github.com/codespaces
   	
-3.	AWS Cloud9 – can be used with an AWS free tier account, try to avoid setting up AWS CloudTrail to remain under the free tier. It Logs all API requests, by default for 90 days.
+3. AWS Cloud9
+   - can be used with an AWS free tier account with t2.micro instance
+   - Avoid using Cloud9 in case of free tier instance in use for other purpose
+   - Try to avoid setting up AWS CloudTrail to remain under the free tier. It Logs all API requests, by default for 90 days.
+
+
+## Best Practices for Securing Docker Containers
+
+What is Container Security?
+Container Security refers to the practice of safeguarding your applications hosted on computing services like Containers. Examples of such applications include Single Page Applications (SPAs), Microservices, and APIs.
+
+Components of Container Security
+1. Docker & Host Configuration
+2. Image Security
+3. Management of Secrets
+4. Application Security
+5. Data Security
+6. Container Monitoring
+7. Compliance Framework
+
+Security Best Practices
+- Keep Host & Docker Up-to-Date with the Latest Security Patches.
+- Ensure Docker daemon & containers run in non-root user mode to prevent container escape.
+- Use Secret Management Services to Share Secrets Securely.
+- Implement Read-Only File Systems and Volumes for Docker Containers.
+- Perform Docker Image Vulnerability Scanning with tools like Clair.
+- Employ DevSecOps Practices for Application Security.
+- Thoroughly Test Code for Vulnerabilities before Production Use.
+- Limit the size of Docker images.
+- Choose between Trusting a Private or Public Image Registry.
+- Avoid Storing Sensitive Data in Docker files or Images.
+- Keep Databases for Long-Term Storage Separate.
+- Conduct Open Source Vulnerability Checks using tools like Snyk (https://snyk.io/).
+
+Testing Docker Containers
+- Create a Docker container following this guide: https://docs.docker.com/compose/gettingstarted/
+- Install the Snyk CLI from: https://docs.snyk.io/snyk-cli/install-the-snyk-cli
+- Use the Snyk command `snyk container test <container_name>` to test your Docker image or Use the Snyk website for container security assessment.
+
+Image Vulnerability Scanning
+Utilize image vulnerability scanning tools such as:
+- Clair - https://www.redhat.com/en/topics/containers/what-is-clair
+- AWS Inspector - https://aws.amazon.com/inspector/
+  
+Secrets Management Tools
+Consider using the following Secret Management Services:
+- HashiCorp Vault - https://www.vaultproject.io/
+- AWS Secrets Manager - https://aws.amazon.com/secrets-manager/
+
+Running Containers in AWS
+To address limitations with Docker and simplify deployment, consider using managed container services like:
+- AWS Elastic Kubernetes Service (EKS)
+- AWS App Runner
+- AWS CoPilot
+- AWS Elastic Container Service (ECS)
+- AWS Fargate (Serverless Service)
