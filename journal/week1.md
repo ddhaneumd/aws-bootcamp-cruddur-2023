@@ -635,6 +635,6 @@ export default function NotificationsFeedPage() {
 
 Finally, navigate to our website and see the notifications tab.
 
-![image](https://github.com/ddhaneumd/aws-bootcamp-cruddur-2023/assets/142753226/6985bdd7-5211-48b9-817d-178f970d3573)
+![image](https://github.com/ddhaneumd/aws-bootcamp-cruddur-2023/assets/142753226/dc1434c7-9807-461b-9db0-a5f08b96350b)
 
 Don't forget to check my cruds which show my love for cats xD!!
