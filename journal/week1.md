@@ -467,5 +467,174 @@ On the Confirm your Email page, put your Email ID again, and the hardcoded passw
 ![image](https://github.com/ddhaneumd/aws-bootcamp-cruddur-2023/assets/142753226/19e9910c-1997-4068-9bc3-c87d177e309f)
 
 Woohoo! Now I am logged in using my own username
-![image](https://github.com/ddhaneumd/aws-bootcamp-cruddur-2023/assets/142753226/8654c72f-4ec3-4c3f-b335-2277359f3603)
+![image](https://github.com/ddhaneumd/aws-bootcamp-cruddur-2023/assets/142753226/4f051c32-2489-4de9-a4de-fd29e0e0b4a3)
 
+Upon navigating through different pages, we understood that the "Notifications" page is yet to setup
+![image](https://github.com/ddhaneumd/aws-bootcamp-cruddur-2023/assets/142753226/1ad107d0-2245-46e7-ac95-8b1fc178e10d)
+
+## Steps to setup the Notifications Page
+### Backend:
+
+1. Update the openapi file for Notifications
+   ![image](https://github.com/ddhaneumd/aws-bootcamp-cruddur-2023/assets/142753226/012e1e9a-ec4f-4aac-88f5-8532b3d38176)
+
+2. Add a new route to app.py file
+```
+@app.route("/api/activities/notifications", methods=['GET'])
+def data_notifications():
+  data = NotificationsActivities.run()
+  return data, 200
+
+```
+
+3. Add new service in app.py file
+   `from services.notifications_activities import *`
+   
+4. create a new file named notifications_activities.py and add below
+```
+   from datetime import datetime, timedelta, timezone
+class NotificationsActivities:
+  def run():
+    now = datetime.now(timezone.utc).astimezone()
+    results = [{
+      'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eee',
+      'handle':  'Dhana',
+      'message': 'Cats will rule over us one day! change my mind!',
+      'created_at': (now - timedelta(days=2)).isoformat(),
+      'expires_at': (now + timedelta(days=5)).isoformat(),
+      'likes_count': 5,
+      'replies_count': 1,
+      'reposts_count': 0,
+      'replies': [{
+        'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea67',
+        'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eee',
+        'handle':  'Kitty',
+        'message': 'Simba the cat cheetos-My lordship!!',
+        'likes_count': 0,
+        'replies_count': 0,
+        'reposts_count': 0,
+        'created_at': (now - timedelta(days=2)).isoformat()
+      }],
+    },
+    ]
+    return results
+
+```
+
+5. Save and commit everything and restart the application once. To test if the backend notifications page works as intended, go to https://4567-ddhaneumd-awsbootcampcr-0q5hn557mhe.ws-us104.gitpod.io and append `/api/activities/notifications` at the end of URL
+
+   ![image](https://github.com/ddhaneumd/aws-bootcamp-cruddur-2023/assets/142753226/60d9b5b6-cbc2-456a-8112-5196d41203a2)
+
+### Frontend
+
+1. Under `/workspace/aws-bootcamp-cruddur-2023/frontend-react-js/src/App.js` add the following
+   
+   `import NotificationsFeedPage from './pages/NotificationsFeedPage';`
+   
+scroll down to the paths section and add
+
+```
+  {
+    path: "/notifications",
+    element: <NotificationsFeedPage />
+  },
+```
+
+2. Under `/workspace/aws-bootcamp-cruddur-2023/frontend-react-js/src/pages` create the `NotificationsFeed.js` and `NotificationsFeed.css` pages.
+   Add the following code to the `NotificationsFeed.js` page ( we are copying most content from the Home page as it is similar)
+
+```
+   import './NotificationsFeedPage.css';
+import React from "react";
+
+import DesktopNavigation  from '../components/DesktopNavigation';
+import DesktopSidebar     from '../components/DesktopSidebar';
+import ActivityFeed from '../components/ActivityFeed';
+import ActivityForm from '../components/ActivityForm';
+import ReplyForm from '../components/ReplyForm';
+
+// [TODO] Authenication
+import Cookies from 'js-cookie'
+
+export default function NotificationsFeedPage() {
+  const [activities, setActivities] = React.useState([]);
+  const [popped, setPopped] = React.useState(false);
+  const [poppedReply, setPoppedReply] = React.useState(false);
+  const [replyActivity, setReplyActivity] = React.useState({});
+  const [user, setUser] = React.useState(null);
+  const dataFetchedRef = React.useRef(false);
+
+  const loadData = async () => {
+    try {
+      const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/activities/notifications`
+      const res = await fetch(backend_url, {
+        method: "GET"
+      });
+      let resJson = await res.json();
+      if (res.status === 200) {
+        setActivities(resJson)
+      } else {
+        console.log(res)
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const checkAuth = async () => {
+    console.log('checkAuth')
+    // [TODO] Authenication
+    if (Cookies.get('user.logged_in')) {
+      setUser({
+        display_name: Cookies.get('user.name'),
+        handle: Cookies.get('user.username')
+      })
+    }
+  };
+
+  React.useEffect(()=>{
+    //prevents double call
+    if (dataFetchedRef.current) return;
+    dataFetchedRef.current = true;
+
+    loadData();
+    checkAuth();
+  }, [])
+
+  return (
+    <article>
+      <DesktopNavigation user={user} active={'Notifications'} setPopped={setPopped} />
+      <div className='content'>
+        <ActivityForm  
+          popped={popped}
+          setPopped={setPopped} 
+          setActivities={setActivities} 
+        />
+        <ReplyForm 
+          activity={replyActivity} 
+          popped={poppedReply} 
+          setPopped={setPoppedReply} 
+          setActivities={setActivities} 
+          activities={activities} 
+        />
+        <ActivityFeed 
+          title="Notifications" 
+          setReplyActivity={setReplyActivity} 
+          setPopped={setPoppedReply} 
+          activities={activities} 
+        />
+      </div>
+      <DesktopSidebar user={user} />
+    </article>
+  );
+}
+
+```
+
+6. Now save all the pages, navigate to the frontend directory, and perform `npm i` Also from the main directory, perform `compose up` on docker compose file.
+
+Finally, navigate to our website and see the notifications tab.
+
+![image](https://github.com/ddhaneumd/aws-bootcamp-cruddur-2023/assets/142753226/6985bdd7-5211-48b9-817d-178f970d3573)
+
+Don't forget to check my cruds which show my love for cats xD!!
