@@ -447,3 +447,25 @@ To address limitations with Docker and simplify deployment, consider using manag
 - AWS CoPilot
 - AWS Elastic Container Service (ECS)
 - AWS Fargate (Serverless Service)
+
+
+# Setting up Notifications Page Backend and Frontend
+Now that we have our Crudder app up and running with the default page setup, we will log in to Crudder with our email ID and check what are the scope of improvements.
+
+First, go to frontend directory `gitpod /workspace/aws-bootcamp-cruddur-2023/frontend-react-js (main)` and do `npm i`
+![image](https://github.com/ddhaneumd/aws-bootcamp-cruddur-2023/assets/142753226/0b391359-a6de-40d0-880c-471f89040aa3)
+
+Now right click on `docker-compose.yml` file in the VScode File section and compose up
+Navigate to the URL in the "exposed ports" section for port 3000 (make sure both port 3000 and 4567 are unlocked)
+Click on sign up, note this is a mocked-up website made by Andrew for testing purposes. Put all the details like your Email ID, Username, and Password
+
+![image](https://github.com/ddhaneumd/aws-bootcamp-cruddur-2023/assets/142753226/48d3bc9f-6d34-4689-ac20-d89fe3d18a4c)
+
+
+On the Confirm your Email page, put your Email ID again, and the hardcoded password `1234`
+
+![image](https://github.com/ddhaneumd/aws-bootcamp-cruddur-2023/assets/142753226/19e9910c-1997-4068-9bc3-c87d177e309f)
+
+Woohoo! Now I am logged in using my own username
+![image](https://github.com/ddhaneumd/aws-bootcamp-cruddur-2023/assets/142753226/8654c72f-4ec3-4c3f-b335-2277359f3603)
+
